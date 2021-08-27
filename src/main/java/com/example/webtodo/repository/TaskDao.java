@@ -17,4 +17,6 @@ public interface TaskDao {
 
     int deleteById(int id);
 
+    List<Task> findByType(int typeId);
+
 }
