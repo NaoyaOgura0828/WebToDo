@@ -18,7 +18,6 @@ public class TaskDaoImpl implements TaskDao {
 
     public final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public TaskDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
