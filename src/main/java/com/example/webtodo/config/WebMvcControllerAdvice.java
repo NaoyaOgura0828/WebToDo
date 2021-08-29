@@ -14,6 +14,7 @@ public class WebMvcControllerAdvice {
 
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
+        /* 入力の空文字をnullに変換する */
         webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
