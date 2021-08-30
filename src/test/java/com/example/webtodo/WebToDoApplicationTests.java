@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class WebToDoApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void contextLoads() {
     }
 
 }
