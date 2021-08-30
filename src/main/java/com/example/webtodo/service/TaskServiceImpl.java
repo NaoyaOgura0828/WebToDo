@@ -2,6 +2,7 @@ package com.example.webtodo.service;
 
 import com.example.webtodo.entity.Task;
 import com.example.webtodo.repository.TaskDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ public class TaskServiceImpl implements TaskService{
 
     public final TaskDao dao;
 
+    @Autowired
     public TaskServiceImpl(TaskDao dao) {
         this.dao = dao;
     }
