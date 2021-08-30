@@ -1,5 +1,6 @@
 package com.example.webtodo.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,10 +14,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.Equals;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("TaskServiceImplの単体テスト")
@@ -46,7 +50,7 @@ class TaskServiceImplUnitTest {
         verify(dao, times(1)).findAll();
 
         /* 戻り値の検査（expected, actual） */
-        Assertions.assertEquals(0, actualList.size());
+        assertEquals(0, actualList.size());
 
     }
 
@@ -72,15 +76,24 @@ class TaskServiceImplUnitTest {
         verify(dao, times(1)).findAll();
 
         /* 戻り値の検査（expected, actual） */
-        Assertions.assertEquals(2, actualList.size());
+        assertEquals(2, actualList.size());
 
     }
 
     @Test
     @DisplayName("タスクが取得できない場合のテスト")
-
+    /* テスト名 */
     void testGetTaskThrowException() {
 
+        /* モッククラスのI/Oをセット */
+        when(dao.findById(0)).thenThrow(new EmptyResultDataAccessException(1));
+
+        /* タスクが取得できないとTaskNotFoundExceptionが発生することを検査 */
+        try {
+            Optional<Task> task0 = taskServiceimpl.getTask(0);
+        } catch (TaskNotFoundException e) {
+            assertEquals(e.getMessage(), "指定したタスクが存在しません");
+        }
     }
 
     @Test
