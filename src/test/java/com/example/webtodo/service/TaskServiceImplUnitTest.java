@@ -82,7 +82,7 @@ class TaskServiceImplUnitTest {
 
     }
 
-    @Test
+    @Test // テストケース
     @DisplayName("タスクが取得できない場合のテスト")
     /* テスト名 */
     void testGetTaskThrowException() {
@@ -98,7 +98,7 @@ class TaskServiceImplUnitTest {
         }
     }
 
-    @Test
+    @Test // テストケース
     @DisplayName("タスクを1件取得した場合のテスト")
     /* テスト名 */
     void testGetTaskReturnOne() {
@@ -121,10 +121,19 @@ class TaskServiceImplUnitTest {
 
     }
 
-    @Test
+    @Test // テストケース
     @DisplayName("削除対象が存在しない場合、例外が発生することを確認するテスト")
-
+    /* テスト名 */
     void throwNotFoundException() {
 
+        /* モッククラスのI/Oをセット */
+        when(dao.deleteById(0)).thenReturn(0);
+
+        /* 削除対象が存在しない場合、例外が発生することを検査 */
+        try {
+            taskServiceimpl.deleteById(0);
+        } catch (TaskNotFoundException e) {
+            assertEquals(e.getMessage(), "削除するタスクが存在しません");
+        }
     }
 }
