@@ -1,6 +1,7 @@
 package com.example.webtodo.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -18,6 +19,7 @@ import org.mockito.internal.matchers.Equals;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import javax.validation.constraints.AssertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -98,8 +100,24 @@ class TaskServiceImplUnitTest {
 
     @Test
     @DisplayName("タスクを1件取得した場合のテスト")
-
+    /* テスト名 */
     void testGetTaskReturnOne() {
+
+        /* Taskをデフォルト値でインスタンス化 */
+        Task task = new Task();
+        Optional<Task> taskOpt = Optional.ofNullable(task);
+
+        /* モッククラスのI/Oをセット */
+        when(dao.findById(1)).thenReturn(taskOpt);
+
+        /* サービスを実行 */
+        Optional<Task> taskActual = taskServiceimpl.getTask(1);
+
+        /* モックの指定メソッドの実行回数を検査 */
+        verify(dao, times(1)).findById(1);
+
+        /* Taskが存在していることを確認 */
+        assertTrue(taskActual.isPresent());
 
     }
 
